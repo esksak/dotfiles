@@ -1,0 +1,15 @@
+# This is Git's per-user configuration file.
+[user]
+# name =
+# email =
+
+[alias]
+st = status
+co = checkout
+difff = diff --word-diff
+
+[core]
+editor = /usr/bin/vi
+
+[pull]
+rebase = false

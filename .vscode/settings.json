@@ -1,0 +1,44 @@
+{
+    "terminal.integrated.scrollback": 5000,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": true,
+    "javascript.inlayHints.parameterNames.enabled": "all",
+    "typescript.inlayHints.parameterNames.enabled": "all",
+    "workbench.tree.renderIndentGuides": "always",
+    "workbench.tree.indent": 16,
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "vim.hlsearch": true,
+    "vim.leader": "<space>",
+    "vim.useSystemClipboard": true,
+    "vim.statusBarColorControl": false,
+    "extensions.experimental.affinity": {
+        "vscodevim.vim": 1,
+        "asvetliakov.vscode-neovim": 1
+    },
+    "workbench.editor.showTabs": "single",
+    "editor.minimap.enabled": false,
+    "editor.renderWhitespace": "all",
+    "vim.normalModeKeyBindings": [
+        {
+            "before": ["<leader>", "j", "f"],
+            "commands": [
+                {
+                    "command": "workbench.action.quickOpen" 
+                }
+            ]
+        },
+        {
+            "before": ["<leader>", "s", "a"],
+            "after": [":", "w", "a", "<Enter>"]
+        }
+    ],
+
+    "vim.insertModeKeyBindings": [
+        {
+            "before": ["j", "j"],
+            "after": ["<Esc>"]
+        }
+    ],
+    "terminal.integrated.defaultProfile.osx": "zsh",
+
+}
