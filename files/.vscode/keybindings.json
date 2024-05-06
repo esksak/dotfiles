@@ -81,7 +81,16 @@
     "command": "workbench.action.increaseViewWidth",
     "when": "editorFocus"
   },
-  
+  {
+    "key": "cmd+space",
+    "command": "editor.action.triggerParameterHints",
+    "when": "editorHasSignatureHelpProvier && editorTextFocus"
+  },
+  {
+    "key": "cmd+space",
+    "command": "closeParameterHints",
+    "when": "editorFocus && parameterHintsVisible"
+  },
   // terminal
   {
     "key": "ctrl+v",

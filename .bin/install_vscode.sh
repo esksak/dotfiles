@@ -13,14 +13,10 @@ rm "$VSCODE_SETTING_DIR/keybindings.json"
 ln -s "$VSCODE_CONFIG_DIR/keybindings.json" "${VSCODE_SETTING_DIR}/keybindings.json"
 
 # install extention
-: ' TODO
 command echo -e "vscode: installing extensions"
 cat ${VSCODE_CONFIG_DIR}/extensions | while read line
 do
  code --install-extension $line
 done
 
-code --list-extensions
-cp -rt $HOME/.vscode/extensions ${VSCODE_CONFIG_DIR}
-'
 command echo -e "vscode: complete!"
