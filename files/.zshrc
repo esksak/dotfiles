@@ -53,8 +53,13 @@ compinit
 limit coredumpsize 102400
 ## 出力の文字列末尾に改行コードが無い場合でも表示
 unsetopt promptcr
-## Emacsライクキーバインド設定
+## emacsライクキーバインド設定
 bindkey -e
+# jjでcmdモードへ
+bindkey -M viins 'jj' vi-cmd-mode
+# using zsh-vi-mode plugin (need brew install)
+source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+ZVM_VI_INSERT_ESCAPE_BINDKEY=jj
 
 ## 色を使う
 setopt prompt_subst
@@ -123,12 +128,20 @@ setopt list_packed
 ## 最後のスラッシュを自動的に削除しない
 setopt noautoremoveslash
 # ヒストリの履歴検索
-autoload history-search-end
-zle -N history-beginning-search-backward-end history-search-end
-zle -N history-beginning-search-forward-end history-search-end
-bindkey "^P" history-beginning-search-backward-end
-bindkey "^N" history-beginning-search-forward-end
+# autoload history-search-end
+# zle -N history-beginning-search-backward-end history-search-end
+# zle -N history-beginning-search-forward-end history-search-end
+# bindkey "^P" history-beginning-search-backward-end
+# bindkey "^N" history-beginning-search-forward-end
 ## プロンプトの設定
+function select-history() {
+  BUFFER=$(history -n -r 1 | fzf --exact --reverse --query="$LBUFFER" --prompt="History > ")
+  CURSOR=${#BUFFER}
+  zle accept-line
+}
+zle -N select-history       # ZLEのウィジェットとして関数を登録
+bindkey '^t' select-history # `Ctrl+r` で登録したselect-historyウィジェットを呼び出す
+
 autoload -Uz colors; colors
 #PROMPT="%{${fg[yellow]}%}%(!.#.$) %{${reset_color}%}"
 PROMPT='[`rprompt-git-current-branch`]%{${fg[yellow]}%}%(!.#.$) %{${reset_color}%}'
@@ -161,10 +174,6 @@ setopt hist_expand
 
 # 履歴をインクリメンタルに追加
 setopt inc_append_history
-
-# インクリメンタルからの検索
-bindkey "^R" history-incremental-search-backward
-bindkey "^S" history-incremental-search-forward
 
 #alias
 alias ls="ls -G"
