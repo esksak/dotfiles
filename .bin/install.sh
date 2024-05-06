@@ -2,32 +2,47 @@
 set -ue
 
 CURRENT_DIR=$(cd $(dirname $0) && pwd)
+DEST=$HOME
 
 helpmsg() {
   command echo "Usage: $0 [--help | -h]" 0>&2
   command echo ""
 }
 
-link_to_homedir() {
-  command echo "backup old dotfiles..."
-  if [ ! -d "$HOME/.dotbackup" ];then
-    command echo "$HOME/.dotbackup not found. Auto Make it"
-    command mkdir "$HOME/.dotbackup"
-  fi
+mkdir_not_exist() {
+	if [ ! -d "$1" ]; then
+    command echo "$1 not found. Auto Make it"
+		mkdir -p "$1"
+	fi
+}
 
+link_config_dir() {
+	local dotfiles_dir=$1
+  local dest_dir=$2
+	local backup_dir=$3
+  mkdir_not_exist $dest_dir
+  mkdir_not_exist $backup_dir
+  for f in $dotfiles_dir/* $dotfiles_dir/.??*; do
+    [[ `basename $f` == ".vscode" ]] && continue
+    [[ `basename $f` == *\**  ]] && continue
+    [[ -d "$dotfiles_dir/`basename $f`" ]] && link_config_dir "${dotfiles_dir}/`basename $f`" "${dest_dir}/`basename $f`" "${backup_dir}/`basename $f`" && continue
+    if [[ -L "$dest_dir/`basename $f`" ]];then
+      command rm -f "$dest_dir/`basename $f`"
+    fi
+    if [[ -f "$dest_dir/`basename $f`" ]];then
+      command mv "$dest_dir/`basename $f`" "$backup_dir"
+    fi
+    command ln -snf $f $dest_dir
+  done
+}
+
+link_to_homedir() {
+  local backup_dir=$DEST/.dotbackup
   local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
-  local dotdir=$(dirname ${script_dir})
-  if [[ "$HOME" != "$dotdir" ]];then
-    for f in $dotdir/.??*; do
-      [[ `basename $f` == ".git" ]] && continue
-      if [[ -L "$HOME/`basename $f`" ]];then
-        command rm -f "$HOME/`basename $f`"
-      fi
-      if [[ -e "$HOME/`basename $f`" ]];then
-        command mv "$HOME/`basename $f`" "$HOME/.dotbackup"
-      fi
-      command ln -snf $f $HOME
-    done
+  local dotdir="$(dirname ${script_dir})/files"
+  mkdir_not_exist $backup_dir
+  if [[ "$DEST" != "$dotdir" ]];then
+    link_config_dir $dotdir $DEST $backup_dir
   else
     command echo "same install src dest"
   fi
@@ -41,6 +56,10 @@ while [ $# -gt 0 ];do
     --help|-h)
       helpmsg
       exit 1
+      ;;
+    --test|-t)
+      DEST=/tmp/tmphome
+      mkdir_not_exist $DEST
       ;;
     *)
       ;;

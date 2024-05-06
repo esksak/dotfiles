@@ -2,7 +2,7 @@
 
 SCRIPT_DIR=$(cd $(dirname $0) && pwd)
 VSCODE_SETTING_DIR=~/Library/Application\ Support/Code/User
-VSCODE_CONFIG_DIR=$(cd ${SCRIPT_DIR}/../.vscode && pwd)
+VSCODE_CONFIG_DIR=$(cd ${SCRIPT_DIR}/../files/.vscode && pwd)
 
 command echo -e "vscode: linking settings.json"
 rm "$VSCODE_SETTING_DIR/settings.json"
