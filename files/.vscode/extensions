@@ -2,6 +2,7 @@ aaron-bond.better-comments
 akamud.vscode-javascript-snippet-pack
 bradgashler.htmltagwrap
 christian-kohler.path-intellisense
+dariofuzinato.vue-peek
 dbaeumer.vscode-eslint
 donjayamanne.githistory
 eamodio.gitlens
@@ -10,6 +11,7 @@ esbenp.prettier-vscode
 formulahendry.auto-rename-tag
 formulahendry.code-runner
 github.github-vscode-theme
+github.vscode-pull-request-github
 humao.rest-client
 ipatalas.vscode-postfix-ts
 ishiyama.vue-autoimport
@@ -36,3 +38,4 @@ streetsidesoftware.code-spell-checker
 usernamehw.errorlens
 vunguyentuan.vscode-css-variables
 wayou.vscode-todo-highlight
+

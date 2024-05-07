@@ -1,7 +1,7 @@
 # This is Git's per-user configuration file.
 [user]
-# name =
-# email =
+name = "Eisuke Sakai"
+email = "13343596+esksak@users.noreply.github.com"
 
 [alias]
 st = status

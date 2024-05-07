@@ -1,39 +1,3 @@
-autoload -Uz VCS_INFO_get_data_git; VCS_INFO_get_data_git 2> /dev/null
-
-function rprompt-git-current-branch {
-        local name st color gitdir action
-        if [[ "$PWD" =~ '/\.git(/.*)?$' ]]; then
-                return
-        fi
-
-        name=`git rev-parse --abbrev-ref=loose HEAD 2> /dev/null`
-        if [[ -z $name ]]; then
-                return
-        fi
-
-        gitdir=`git rev-parse --git-dir 2> /dev/null`
-        action=`VCS_INFO_git_getaction "$gitdir"` && action="($action)"
-
-	if [[ -e "$gitdir/prompt-nostatus" ]]; then
-		echo "$name$action "
-		return
-	fi
-
-        st=`git status 2> /dev/null`
-	if [[ -n `echo "$st" | grep "^nothing to"` ]]; then
-		color=%F{white}%f
-	elif [[ -n `echo "$st" | grep "^# Changes to be committed"` ]]; then
-		color=%F{green}%f
-	elif [[ -n `echo "$st" | grep "^# Untracked\|^# Changes not"` ]]; then
-                color=%F{red}%f
-        fi
-
-        echo "$color$name$action%f%b "
-}
-
-# プロンプトが表示されるたびにプロンプト文字列を評価、置換する
-setopt prompt_subst
-
 export LANG=ja_JP.UTF-8
 export GOPATH=$HOME/.go
 export FZF_DEFAULT_COMMAND='ag --nocolor -g ""'
@@ -55,8 +19,7 @@ limit coredumpsize 102400
 unsetopt promptcr
 ## emacsライクキーバインド設定
 bindkey -e
-# jjでcmdモードへ
-bindkey -M viins 'jj' vi-cmd-mode
+
 # using zsh-vi-mode plugin (need brew install)
 source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 ZVM_VI_INSERT_ESCAPE_BINDKEY=jj
@@ -100,7 +63,7 @@ setopt share_history
 ## 補完候補のカーソル選択を有効に
 zstyle ':completion:*:default' menu select=1
 ## 補完候補の色づけ
-eval `dircolors`
+# eval `dircolors`
 export ZLS_COLORS=$LS_COLORS
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 ## ディレクトリ名だけで cd
@@ -127,6 +90,23 @@ setopt hist_no_store
 setopt list_packed
 ## 最後のスラッシュを自動的に削除しない
 setopt noautoremoveslash
+# ヒストリに追加されるコマンド行が古いものと同じなら古いものを削除
+setopt hist_ignore_all_dups
+# スペースで始まるコマンド行はヒストリリストから削除
+setopt hist_ignore_space
+# ヒストリを呼び出してから実行する間に一旦編集可能
+setopt hist_verify
+# 余分な空白は詰めて記録
+setopt hist_reduce_blanks
+# 古いコマンドと同じものは無視
+setopt hist_save_no_dups
+# historyコマンドは履歴に登録しない
+setopt hist_no_store
+# 補完時にヒストリを自動的に展開
+setopt hist_expand
+# 履歴をインクリメンタルに追加
+setopt inc_append_history
+
 # ヒストリの履歴検索
 # autoload history-search-end
 # zle -N history-beginning-search-backward-end history-search-end
@@ -134,6 +114,7 @@ setopt noautoremoveslash
 # bindkey "^P" history-beginning-search-backward-end
 # bindkey "^N" history-beginning-search-forward-end
 ## プロンプトの設定
+
 function select-history() {
   BUFFER=$(history -n -r 1 | fzf --exact --reverse --query="$LBUFFER" --prompt="History > ")
   CURSOR=${#BUFFER}
@@ -142,39 +123,6 @@ function select-history() {
 zle -N select-history       # ZLEのウィジェットとして関数を登録
 bindkey '^t' select-history # `Ctrl+r` で登録したselect-historyウィジェットを呼び出す
 
-autoload -Uz colors; colors
-#PROMPT="%{${fg[yellow]}%}%(!.#.$) %{${reset_color}%}"
-PROMPT='[`rprompt-git-current-branch`]%{${fg[yellow]}%}%(!.#.$) %{${reset_color}%}'
-#PROMPT='[`rprompt-git-current-branch`]'
-#PROMPT="%{${fg[blue]}%}%(!.#.$) %{${reset_color}%}"
-PROMPT2="%{${fg[blue]}%}%_> %{${reset_color}%}"
-SPROMPT="%{${fg[red]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
-RPROMPT="%{${fg[yellow]}%}[%~]%{${reset_color}%}"
-
-# ヒストリに追加されるコマンド行が古いものと同じなら古いものを削除
-setopt hist_ignore_all_dups
-
-# スペースで始まるコマンド行はヒストリリストから削除
-setopt hist_ignore_space
-
-# ヒストリを呼び出してから実行する間に一旦編集可能
-setopt hist_verify
-
-# 余分な空白は詰めて記録
-setopt hist_reduce_blanks
-
-# 古いコマンドと同じものは無視
-setopt hist_save_no_dups
-
-# historyコマンドは履歴に登録しない
-setopt hist_no_store
-
-# 補完時にヒストリを自動的に展開
-setopt hist_expand
-
-# 履歴をインクリメンタルに追加
-setopt inc_append_history
-
 #alias
 alias ls="ls -G"
 alias la="ls -hA"
@@ -182,10 +130,59 @@ alias ll="ls -lh"
 alias lla="ls -lhA"
 alias l="ls -CF"
 
-alias vi="/usr/local/bin/vim"
+alias vi="$(which nvim)"
 alias ctags="/usr/local/bin/ctags"
 
 alias patchd="patch --dry-run"
 alias diff="diff -Naur"
 alias gitst="git status"
 alias grep="grep --color=auto"
+
+# starship
+eval "$(starship init zsh)"
+
+# old prompt
+# autoload -Uz VCS_INFO_get_data_git; VCS_INFO_get_data_git 2> /dev/null
+# 
+# function rprompt-git-current-branch {
+#         local name st color gitdir action
+#         if [[ "$PWD" =~ '/\.git(/.*)?$' ]]; then
+#                 return
+#         fi
+# 
+#         name=`git rev-parse --abbrev-ref=loose HEAD 2> /dev/null`
+#         if [[ -z $name ]]; then
+#                 return
+#         fi
+# 
+#         gitdir=`git rev-parse --git-dir 2> /dev/null`
+#         action=`VCS_INFO_git_getaction "$gitdir"` && action="($action)"
+# 
+# 	if [[ -e "$gitdir/prompt-nostatus" ]]; then
+# 		echo "$name$action"
+# 		return
+# 	fi
+# 
+#         st=`git status 2> /dev/null`
+# 	if [[ -n `echo "$st" | grep "^nothing to"` ]]; then
+# 		color=%F{white}%f
+# 	elif [[ -n `echo "$st" | grep "^# Changes to be committed"` ]]; then
+# 		color=%F{green}%f
+# 	elif [[ -n `echo "$st" | grep "^# Untracked\|^# Changes not"` ]]; then
+#                 color=%F{red}%f
+#         fi
+# 
+#         echo "$color$name$action%f%b "
+# }
+
+
+
+#autoload -Uz colors; colors
+#PROMPT="%{${fg[yellow]}%}%(!.#.$) %{${reset_color}%}"
+#PROMPT='[`rprompt-git-current-branch`]%{${fg[yellow]}%}%(!.#.$) %{${reset_color}%}'
+#PROMPT='[`rprompt-git-current-branch`]'
+#PROMPT="%{${fg[blue]}%}%(!.#.$) %{${reset_color}%}"
+#PROMPT2="%{${fg[blue]}%}%_> %{${reset_color}%}"
+#SPROMPT="%{${fg[red]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
+#RPROMPT="%{${fg[yellow]}%}[%~]%{${reset_color}%}"
+
