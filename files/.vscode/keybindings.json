@@ -55,8 +55,8 @@
     "command": "runCommands",
     "args": {
       "commands": [
-        "workbench.action.closeSidebar", 
-        "workbench.action.minimizeOtherEditors" 
+        "workbench.action.closeSidebar",
+        "workbench.action.minimizeOtherEditors"
       ]
     },
     "when": "editorFocus"
@@ -154,7 +154,23 @@
     "command": "workbench.action.focusFirstEditorGroup",
     "when": "sideBarFocus"
   },
- 
+
+  // vim leader keybindings with when: init.vim could not handle when keyword
+  {
+    "key": "space d",
+    "command": "editor.action.goToDeclaration",
+    "when": "neovim.mode == normal && editorTextFocus"
+  },
+  {
+    "key": "space b",
+    "command": "workbench.action.navigateBack",
+    "when": "neovim.mode == normal && editorTextFocus"
+  },
+  {
+    "key": "space h",
+    "command": "editor.action.showHover",
+    "when": "neovim.mode == normal && editorTextFocus"
+  },
   // ???
   {
     "key": "ctrl+j",
