@@ -1,50 +1,53 @@
 {
-    "terminal.integrated.scrollback": 5000,
-    "editor.bracketPairColorization.enabled": true,
-    "editor.guides.bracketPairs": "active",
-    "javascript.inlayHints.parameterNames.enabled": "all",
-    "typescript.inlayHints.parameterNames.enabled": "all",
-    "workbench.tree.renderIndentGuides": "always",
-    "workbench.tree.indent": 16,
-    "terminal.integrated.enableMultiLinePasteWarning": "auto",
-    "extensions.experimental.affinity": {
-        "vscodevim.vim": 1,
-        "asvetliakov.vscode-neovim": 1
+  "terminal.integrated.scrollback": 5000,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "javascript.inlayHints.parameterNames.enabled": "all",
+  "typescript.inlayHints.parameterNames.enabled": "all",
+  "workbench.tree.renderIndentGuides": "always",
+  "workbench.tree.indent": 16,
+  "terminal.integrated.enableMultiLinePasteWarning": "auto",
+  "extensions.experimental.affinity": {
+    "vscodevim.vim": 1,
+    "asvetliakov.vscode-neovim": 1
+  },
+  "workbench.editor.showTabs": "single",
+  "editor.minimap.enabled": false,
+  "editor.renderWhitespace": "all",
+  "files.autoSave": "onFocusChange",
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "files.trimTrailingWhitespace": true,
+  "editor.wordWrap": "on",
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  // NeoVim settings
+  "vscode-neovim.compositeKeys": {
+    "jj": {
+      "command": "vscode-neovim.escape"
     },
-    "workbench.editor.showTabs": "single",
-    "editor.minimap.enabled": false,
-    "editor.renderWhitespace": "all",
-    "files.autoSave": "onFocusChange",
-    "editor.formatOnSave": true,
-    "editor.tabSize": 2,
-    "files.trimTrailingWhitespace": true,
-    "editor.wordWrap": "on",
-    "terminal.integrated.defaultProfile.osx": "zsh",
-    // NeoVim settings
-    "vscode-neovim.compositeKeys": {
-        "jj": {
-            "command": "vscode-neovim.escape"
-        },
-        "jk": {
-            // Use lua to execute any logic
-            "command": "vscode-neovim.lua",
-            "args": [
-                "local code = require('vscode-neovim'); code.action('vscode-neovim.escape'); code.action('workbench.action.files.save')",
-            ]
-        }
-    },
-    "workbench.colorTheme": "GitHub Dark Default",
-
-    //emmet
-    "emmet.showSuggestionsAsSnippets": true,
-    "emmet.triggerExpansionOnTab": true,
-    "files.exclude": {
-        "**/.git": true,
-        "**/.svn": true,
-        "**/.hg": true,
-        "**/CVS": true,
-        "**/.DS_Store": true,
-        "**/Thumbs.db": true,
-        "**/node_modules": true,
+    "jk": {
+      // Use lua to execute any logic
+      "command": "vscode-neovim.lua",
+      "args": [
+        "local code = require('vscode-neovim'); code.action('vscode-neovim.escape'); code.action('workbench.action.files.save')"
+      ]
     }
+  },
+  "workbench.colorTheme": "GitHub Dark Default",
+
+  //emmet
+  "emmet.showSuggestionsAsSnippets": true,
+  "emmet.triggerExpansionOnTab": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/node_modules": true
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "github.copilot.editor.enableAutoCompletions": true,
+  "git.autofetch": true
 }

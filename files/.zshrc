@@ -1,6 +1,8 @@
 export LANG=ja_JP.UTF-8
 export GOPATH=$HOME/.go
 export FZF_DEFAULT_COMMAND='ag --nocolor -g ""'
+export PATH="$HOME/bin:$PATH"
+
 
 ## 履歴の保存先
 HISTFILE=$HOME/.zsh-history
