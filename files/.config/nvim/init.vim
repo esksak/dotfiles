@@ -140,7 +140,8 @@ endfunction
 nnoremap <Leader>z :call ToggleWindowSize()<CR>
 
 
-if exists('g:vscode')
-  nnoremap <Leader>jf <Cmd>lua require('vscode-neovim').action('workbench.action.quickOpen')<CR>
+" init.vim could not handle when keyword so use keybininds.json instead
+" if exists('g:vscode')
+"   nnoremap <Leader>jf <Cmd>lua require('vscode-neovim').action('workbench.action.quickOpen')<CR>
+"endif
 
-endif

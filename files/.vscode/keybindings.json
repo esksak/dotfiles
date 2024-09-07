@@ -56,7 +56,7 @@
     "args": {
       "commands": [
         "workbench.action.closeSidebar",
-        "workbench.action.minimizeOtherEditors"
+        "workbench.action.toggleEditorWidths"
       ]
     },
     "when": "editorFocus"
@@ -171,6 +171,17 @@
     "command": "editor.action.showHover",
     "when": "neovim.mode == normal && editorTextFocus"
   },
+  {
+    "key": "space j f",
+    "command": "workbench.action.quickOpen",
+    "when": "neovim.mode == normal && editorTextFocus"
+  },
+  {
+    "key": "space s a",
+    "command": "workbench.action.files.saveFiles",
+    "when": "neovim.mode == normal && editorTextFocus"
+  }
+
   // ???
   {
     "key": "ctrl+j",

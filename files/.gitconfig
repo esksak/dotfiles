@@ -10,6 +10,7 @@ difff = diff --word-diff
 
 [core]
 editor = /usr/bin/vi
+quotepath = false
 
 [pull]
 rebase = false

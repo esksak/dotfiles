@@ -123,7 +123,7 @@ function select-history() {
   zle accept-line
 }
 zle -N select-history       # ZLEのウィジェットとして関数を登録
-bindkey '^t' select-history # `Ctrl+r` で登録したselect-historyウィジェットを呼び出す
+bindkey "^p" select-history # `Ctrl+r` で登録したselect-historyウィジェットを呼び出す
 
 #alias
 alias ls="ls -G"

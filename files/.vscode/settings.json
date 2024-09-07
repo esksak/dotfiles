@@ -15,7 +15,6 @@
   "editor.minimap.enabled": false,
   "editor.renderWhitespace": "all",
   "files.autoSave": "onFocusChange",
-  "editor.formatOnSave": true,
   "editor.tabSize": 2,
   "files.trimTrailingWhitespace": true,
   "editor.wordWrap": "on",
@@ -49,5 +48,11 @@
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "github.copilot.editor.enableAutoCompletions": true,
-  "git.autofetch": true
+  "git.autofetch": true,
+  "diffEditor.renderSideBySide": false,
+  "diffEditor.hideUnchangedRegions.enabled": true,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "workbench.editor.enablePreview": false,
+  "playwright.reuseBrowser": true,
+  "editor.formatOnSave": true
 }
