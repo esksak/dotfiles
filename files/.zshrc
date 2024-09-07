@@ -14,6 +14,7 @@ SAVEHIST=100000
 ## 補完機能の強化
 autoload -U compinit
 compinit
+source ~/fzf-tab/fzf-tab.plugin.zsh
 
 ## コアダンプサイズを制限
 limit coredumpsize 102400
