@@ -5,11 +5,12 @@ VSCODE_SETTING_DIR=~/Library/Application\ Support/Code/User
 VSCODE_CONFIG_DIR=$(cd ${SCRIPT_DIR}/../files/.vscode && pwd)
 
 command echo -e "vscode: linking settings.json"
-rm "$VSCODE_SETTING_DIR/settings.json"
+if [ -e  "$VSCODE_SETTING_DIR/settings.json" ]; then
+  rm "$VSCODE_SETTING_DIR/settings.json"
+fi
+
 ln -s "$VSCODE_CONFIG_DIR/settings.json" "${VSCODE_SETTING_DIR}/settings.json"
 
-command echo -e "vscode: linking keybindings.json"
-rm "$VSCODE_SETTING_DIR/keybindings.json"
 ln -s "$VSCODE_CONFIG_DIR/keybindings.json" "${VSCODE_SETTING_DIR}/keybindings.json"
 
 # install extention
